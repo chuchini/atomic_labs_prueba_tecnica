@@ -50,3 +50,47 @@ Primeramente se dividió el problema en las siguientes partes:
 7. Definir la rutina lógica para el turno de los colaboradores.
 8. Llevar un registro de la bitácora del programa.
 9. Englobar la rutina de los zombies y los colaboradores junto con la rutina completa del programa, es decir, manejar los turnos y verificar si el programa ha terminado su ejecución
+
+Una vez definido todos estos subproblemas, procedí a resolver cada uno de ellos. Para tener una estructura de código limpia, me apoyé en el patrón
+de diseño Modelo-Vista-Controlador. Siguiendo este patrón de diseño nos es posible separar la lógica del programa y las vistas que el usuario
+final usará para interactuar con el programa, siendo el controlador el encargado de conectar ambas partes y ejecutar la lógica de los modelos.
+
+### Subproblema I.
+Ṕara esta parte bastó con usar una clase que hereda JFrame y dibujar en ella una cuadricula de 20x20 haciendo uso de labels, que corresponden a cada
+casilla. Una vez hecho esto lo único que hay que agregar a esta clase es la funcionalidad de saber qué dibujar con la información que le manda el controlador
+y, también, cómo procesar la información una vez que se tiene que refrescar la vista (repaint).
+
+### Subproblema II.
+Para tener la lógica del tablero (qué se encuentra en cada una de las casillas) se utiliza una matriz bidimensional de 20x20, donde se hace uso del siguiente
+código:
+
+| Código        | Significado           |
+| ------------- |:---------------------:|
+| 0             | Pared                 |
+| 1             | Casilla vacía         |
+| 2             | Ventana               |
+| 3             | Zombie                |
+| 4             | Colaborador           |
+| 5             | Salida                |
+| 6             | Colaborador infectado |
+
+La aparición de loz zombies es aleatoria en alguna de las ventanas, por lo que se usa **Math.random** para obtener un número aleatorio correspondiente a las ventanas,
+para hacer que los zombies aparezcan en cada una de las secciones de ventanas, se implementa la aparición aleatoria en cada una, es decir, un zombie aparecerá de manera
+aleatoria en las primeras 4 ventanas y el siguiente zombie aparecerá de manera aleatoria en las siguientes 4 ventanas.
+
+Para el caso de los colaboradores es más sencillo, se añaden de manera manual en el tablero, correspondiendo a la configuración ya dada por el problema. Para llevar
+un registro del número de zombies y el número de colaboradores, se utilizan dos ArrayList.
+
+### Subproblema III.
+Para este problema basta con pasar la matriz a la vista por medio del controlador. La vista procesara la información y con base a ella dibujara el tablero.
+
+### Subproblema IV.
+La clase que modela al zombie es sencilla, los únicos atributos que nos interesa tener son su posición en el tablero (fila, columna). De comportamiento únicamente
+nos interesa que se mueva, por lo que tenemos un método encargado de realizar el movimiento con base a un número que representa la opción de movimiento.
+Este número va del 1 al 8 ya que sólo existen 8 posibles movimientos para el zombie. Esto se aprecia en el siguiente dibujo
+
+|    |   |   |
+|----|---|---|
+|    | Z |   |
+|    |   |   |
+|    |   |   |
