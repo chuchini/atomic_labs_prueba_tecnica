@@ -24,6 +24,8 @@ se mostrarán los mensajes de eventos:
 2. Humano Z infectado en la casilla X,Y
 3. Humano Z salvado en la casilla X,Y
 
+**NOTA:**En caso de que haya un problema desconocido, cabe aclarar que se uso la versión 15 de JAVA.
+
 # Explicación del problema.
 El problema consiste en un tablero de 20x20 en donde hay colaboradores y zombies. Al principio sólo hay 2 zombies,
 los cuales aparecen de manera aleatoria. Seguido de ello comienzan a deambular de manera aleatoria sobre el tablero,
@@ -103,7 +105,7 @@ De igual forma tenemos un método que modela el movimiento del colaborador,, sig
 
 ### Subproblema VI.
 Para la rutina de los zombies se contemplan 2 cosas:
-* El zombie verificará si tiene algún colaborador en alguna casilla adyacente, en caso de que sí se encuentre alguno, el zombie lo infectará.
+* El zombie verificará si tiene algún colaborador en alguna casilla adyacente, en caso de que sí se encuentre alguno, el zombie lo infectará; el colaborador se pondrá de color amarillo para indicar que se ha infectado.
 * El zombie se moverá de casilla de manera aleatoria, para validar que el movimiento se pueda realizar se usan método auxiliares que comprueba que a la casilla que quiere moverse no sea pared, no sea ventana, no esté ocupada por otro zombie o colaborador y que no se salga del rango. En caso de que el movimiento no sea válido se ejecutara nuevamente el método envargado de generar un movimiento aleatorio hasta que el movimiento encontrado sea valido.
 
 Básicamente en eso consiste el turno del zombie.

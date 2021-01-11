@@ -21,6 +21,7 @@ public class Vista extends javax.swing.JFrame {
         mainFrame.setLayout(new GridLayout(tablero.length, tablero.length));
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setResizable(false);
+        mainFrame.setTitle("Atomic labs - Jesús Fernando Moreno Ruíz");
 
         for (int row = 0; row < tablero.length; row++) {
             for (int col = 0; col < tablero.length; col++) {
@@ -40,6 +41,13 @@ public class Vista extends javax.swing.JFrame {
     // 4: Colaborador
     // 5: Salida
 
+    /**
+     * Método encargado de crear un nuevo label correspondiente a una casilla
+     * @param c la casilla
+     * @param row la fila
+     * @param col la columna
+     * @return
+     */
     private JLabel makeLabel(int c, int row, int col) {
         JLabel label = new JLabel();
         label.setHorizontalAlignment(JLabel.CENTER);
@@ -71,6 +79,11 @@ public class Vista extends javax.swing.JFrame {
         return label;
     }
 
+    /**
+     * Método encargado de refrescar el tablero, es decir, de pintarlo de nuevo
+     * con los cambios que ocurran
+     * @param tablero el tablero actualizado
+     */
     public void repain(int[][] tablero) {
         for (int row = 0; row < tablero.length; row++) {
             for (int col = 0; col < tablero.length; col++) {
