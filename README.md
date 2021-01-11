@@ -89,8 +89,50 @@ La clase que modela al zombie es sencilla, los únicos atributos que nos interes
 nos interesa que se mueva, por lo que tenemos un método encargado de realizar el movimiento con base a un número que representa la opción de movimiento.
 Este número va del 1 al 8 ya que sólo existen 8 posibles movimientos para el zombie. Esto se aprecia en el siguiente dibujo
 
-|    |   |   |
-|----|---|---|
-|    | Z |   |
-|    |   |   |
-|    |   |   |
+| [x-1,y+1] | [x,y+1] | [x+1,y+1] |
+|-----------|---------|-----------|
+| [x-1,y]   |    Z    | [x+1,y]   |
+| [x-1,y-1] | [x,y-1] | [x+1,y-1] |
+
+Ahora, dado que el tablero es una matriz, los movimientos se realizan de otra manera dado que los movimientos en los ejes no son iguales. Por ejemplo, el movimiento en diagonal a la esquina inferior derecha sería [x+1,y+1] dado que eso implicaría un aumento para el eje Y, contrario a un plano convencional en donde estaríamos restandole 1 al eje Y. Todo esto se encuentra documentado en el código de la clase Zombie.
+
+### Subproblema V.
+Para el caso de la clase colaborador es muy parecido a la del zombie, de atributos tenemos su posición (fila, columna), sin embargo también tenemos un atributo de tipo boolean que nos indicará si el colaborador esta infectado o no. También tenemos otro atributo de tipo boolean que nos indica si el colaborador se ha salvado o no, y tenemos un último atributo que nos sirve de contador para saber si un colaborador ya se transformará o no.
+
+De igual forma tenemos un método que modela el movimiento del colaborador,, siguiendo la misma lógica del zombie, es decir, 8 posibles movimientos.
+
+### Subproblema VI.
+Para la rutina de los zombies se contemplan 2 cosas:
+* El zombie verificará si tiene algún colaborador en alguna casilla adyacente, en caso de que sí se encuentre alguno, el zombie lo infectará.
+* El zombie se moverá de casilla de manera aleatoria, para validar que el movimiento se pueda realizar se usan método auxiliares que comprueba que a la casilla que quiere moverse no sea pared, no sea ventana, no esté ocupada por otro zombie o colaborador y que no se salga del rango. En caso de que el movimiento no sea válido se ejecutara nuevamente el método envargado de generar un movimiento aleatorio hasta que el movimiento encontrado sea valido.
+
+Básicamente en eso consiste el turno del zombie.
+
+### Subproblema VII.
+Antes de explicar la rutina del colaborador, explicaré la forma en que se mueven, es decir, cómo saben a donde moverse para llegar a la meta.
+El mapa lo dividimos en 4 cuadrantes. correspondientes a las coordenadas [0,0] y [10,9] para el primer cuadrante. [0,10] y [10,19] para el segundo cuadrante. [10,0] y [19,9] para el tercer cuadrante y, finalmente,   [10,10] y [19,19] para el cuarto cuadrante. Para el primer y segundo cuadrante (toda la parte superior del tablero) los colaboradores tienen como objetivo llegar a la casilla 9, la cual les permitirá moverse hacia abajo. Para el caso de los otros dos cuadrantes, su objetivo será avanzar hacia abajo hasta llegar a una casilla alineada con la meta. Una vez que se encuentren alineados con la meta, se moverán hacia ella (derecha) hasta llegar a ella.
+Cabe destacar que si el colaborador se encuentra alineado con la meta. ya no ejecutara el movimiento hacia abajo, puesto que el movimiento hacia la meta tiene prioridad.
+Siempre intentarán moverse en diagonal.
+
+Ahora, para la rutina del colaborador se contemplan 3 cosas:
+* El colaborador genera un movimiento con base a 6 posibles casos:
+    1. Primer cuadrante.
+    2. Segundo cuadrante.
+    3. Tercer cuadrante.
+    4. Cuarto cuadrante.
+    5. Movimiento hacia abajo (está en la casilla 9)
+    6. Movimiento hacia la meta (alineado con la meta)
+Una vez generado el movimiento y que haya sido verificado que sea un movimiento valido (no atraviesa paredes, no se sale del tablero y no se mueve a casillas ocupadas), el colaborador realizará el movimiento.
+* El colaborador verificará si esta infectado, en caso de que lo este se ejecutara el método auxiliar encargado de completar el pŕoceso de infección, es decir, aumentar el contador de turnos y, en caso de que hayan pasado 2 turnos, convertir el colaborador en zombie y agregarlo a la lista de zombies y eliminarlo de la lista de colaboradores.
+* El colaborador verifica si se ha salvado, en caso de que sí, es agregado a al lista de colaboradores salvados y eliminado de la lista de colaboradores aún en el tablero.
+
+### Subproblema VIII.
+Para llevar acabo la bitácora del problema, hacemos uso de las listas del controlador correspondiente a los zombies, colaboradores salvados, infectados y los que se encuentran aún en el tablero tratando de escapar. Con ello únicamente imprimimos en consola cada vez que suceda un evento importante (aparición de un zombie, colaborador infectado, colaborador salvado). De igual forma se guarda en un archivo el número de iteración, el número de zombies, el número de colaboradores en la oficina y el número de colaboradores salvados.
+
+### Subproblema IX.
+Por último, en el controlador realizamos las conexiones entre los modelos y las vistas y la ejecución de la lógica del modelo con base a los distintos eventos que se den en el tablero. Para la rutina principal, primeramente se realiza la aparición de los zombies, posteriormente la de los colaboradores. Seguido de lo anterior, se ejecuta un bloque do while, donde se ejecutar, la rutina de la siguiente manera:
+1. Primero es el turno de los zombies, se mueven de manera aleatoria y se hace un refresh de la vista para reflejar los movimientos. sólo se ejecutan 4 movimientos por turno para los zombies, se hace uso de un delay de un segundo, durmiendo el programa, para que se pueda apreciar en pantalla todo lo que ocurre.
+2. Después es el turno de los colaboradores, una vez terminado su turno, se verifica si hay colaboradores que ya se transformaron, en caso de que sí, se eliminan los colaboradores transformados de la lista de colaboradores sanos. Luego, se verifica si hay colaboradores salvados y, de igual manera, en caso de que si se hayan salvado, se elminan de la lista de colaboradores en oficina. Nuevamente se hace un delay de 1 segundo y se refresca la vista para poder apreciar los cambios.
+3. El contador aumenta y el programa terminará su ejecución una vez no queden colaboradores en la oficina.
+
+Esto engloba la lógica de la solución del problema. Todo el código se encuentra documentado para mayor información. De igual manera se explica a mayor profundidad los métodos en la documentación.
