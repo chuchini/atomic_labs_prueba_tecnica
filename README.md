@@ -128,6 +128,8 @@ Una vez generado el movimiento y que haya sido verificado que sea un movimiento 
 * El colaborador verificará si esta infectado, en caso de que lo este se ejecutara el método auxiliar encargado de completar el pŕoceso de infección, es decir, aumentar el contador de turnos y, en caso de que hayan pasado 2 turnos, convertir el colaborador en zombie y agregarlo a la lista de zombies y eliminarlo de la lista de colaboradores.
 * El colaborador verifica si se ha salvado, en caso de que sí, es agregado a al lista de colaboradores salvados y eliminado de la lista de colaboradores aún en el tablero.
 
+Los colaboradores infectados aún se pueden salvar y, únicamente se pueden transformar en su turno, es decir, el contador de infección no cambiará en el turno de zombies. Esto se puede cambiar fácilmente pero por fines prácticas no se aplica. De igual manera, si el colaborador se salva de última instancia (cuando aún está infectado), el contador no lo quitará de la oficina. Es un pequeño bug que no arreglé en tiempo pero sé de existencia.
+
 ### Subproblema VIII.
 Para llevar acabo la bitácora del problema, hacemos uso de las listas del controlador correspondiente a los zombies, colaboradores salvados, infectados y los que se encuentran aún en el tablero tratando de escapar. Con ello únicamente imprimimos en consola cada vez que suceda un evento importante (aparición de un zombie, colaborador infectado, colaborador salvado). De igual forma se guarda en un archivo el número de iteración, el número de zombies, el número de colaboradores en la oficina y el número de colaboradores salvados.
 
